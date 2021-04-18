@@ -38,9 +38,11 @@
       </ode>
     </physics>
 
-    <include>
-      <uri>model://hinged_door</uri>
-    </include>
+    <model name="hinged_door">
+      <include>
+        <uri>model://hinged_door</uri>
+      </include>
+    </model>
 
   </world>
 
