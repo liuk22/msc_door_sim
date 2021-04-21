@@ -9,44 +9,39 @@
 #include "ros/subscribe_options.h"
 #include "std_msgs/Float32.h"
 
-namespace gazebo
-
-
-{
+namespace gazebo {
   /// \brief A plugin to control a Velodyne sensor.
-  class DoorInfoPlugin : public ModelPlugin
-  {
-    /// \brief Constructor
-    public: DoorInfoPlugin() {}
+  class DoorInfo : public ModelPlugin {
+     /// \brief Constructor
+    public: 
+      DoorInfo() {
 
-    /// \brief A node use for ROS transport
-    private: std::unique_ptr<ros::NodeHandle> rosNode;
-
-    /// \brief A ROS subscriber
-    private: ros::Subscriber rosSub;
-
-    /// \brief A ROS callbackqueue that helps process messages
-    private: ros::CallbackQueue rosQueue;
-
-    /// \brief A thread the keeps running the rosQueue
-    private: std::thread rosQueueThread;
+      }
 
     /// \brief The load function is called by Gazebo when the plugin is
     /// inserted into simulation
     /// \param[in] _model A pointer to the model that this plugin is
     /// attached to.
     /// \param[in] _sdf A pointer to the plugin's SDF element.
-    public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
-    {
-      // Just output a message for now
-      std::cerr << "\nThe door info plugin is attached to model[" <<
-        _model->GetName() << "]\n";
-    }
+      virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+        // Just output a message for now
+        std::cerr << "\nThe door info plugin is attached to model[" <<
+          _model->GetName() << "]\n";
+      }
 
-    
+
+    /// \brief A node use for ROS transport
+    private: 
+      std::unique_ptr<ros::NodeHandle> rosNode;
+    /// \brief A ROS subscriber
+      ros::Subscriber rosSub;
+    /// \brief A ROS callbackqueue that helps process messages
+      ros::CallbackQueue rosQueue;
+    /// \brief A thread the keeps running the rosQueue
+      std::thread rosQueueThread;
   };
 
   // Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.
-  GZ_REGISTER_MODEL_PLUGIN(DoorInfoPlugin)
+  GZ_REGISTER_MODEL_PLUGIN(DoorInfo)
 }
 #endif
