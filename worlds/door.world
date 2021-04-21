@@ -18,9 +18,14 @@
     </include>
 
     <!-- A hinged door -->
-    <include>
+    <model name="hinged_door">
+      <include>
       <uri>model://hinged_door</uri>
-    </include>
+      </include>
+      <plugin name="door_info" filename="libdoor_info.so" />
+    </model>
+
+   
 
     <physics type="ode">
       <real_time_update_rate>1000.0</real_time_update_rate>
