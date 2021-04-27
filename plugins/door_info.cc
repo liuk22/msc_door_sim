@@ -6,6 +6,7 @@
 #include "std_msgs/Float32.h"
 #include <sdf/sdf.hh>
 #include <sensor_msgs/JointState.h>
+#include <sstream>
 
 namespace gazebo {
   class DoorInfo : public ModelPlugin {
@@ -13,28 +14,26 @@ namespace gazebo {
     /// \brief The load function is called by Gazebo when the plugin is
     /// inserted into simulation
     public: 
-      DoorInfo() {
-
-      }
+      DoorInfo() {}
 
       virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
-        // Just output a message for now
-
-
         this->model = _model; 
         this->sdf = _sdf; 
         this->world = _model->GetWorld();
         this->updateRate = 20.0;
+
+        std::stringstream sb; 
+        sb << this->model->GetName() << "::" << "hinge";
+        std::string nameTarget = sb.str();
         for (physics::JointPtr jointptr : this->model->GetJoints()) {
-          if (jointptr->GetName().compare("hinge") == 0) {
+          if (jointptr->GetName().compare(nameTarget) == 0) {
             this->hinge = jointptr;
             break;
           }
         }
 
-        this->rosNode = boost::shared_ptr<ros::NodeHandle>(new ros::NodeHandle("hinged_door_NodeHandle"));
+        this->rosNode = boost::shared_ptr<ros::NodeHandle>(new ros::NodeHandle(this->model->GetName()));
         this->pub = this->rosNode->advertise<sensor_msgs::JointState>("door_info", 1000);
-
         this->updateConnection = event::Events::ConnectWorldUpdateBegin(
                                   boost::bind (&DoorInfo::OnUpdate, this)
                                 );
@@ -51,9 +50,14 @@ namespace gazebo {
           double velocity = this->hinge->GetVelocity(0);
           double position = this->hinge->GetAngle(0).Radian();
 
-          this->hingeState.name[0] = "hinge";
-          this->hingeState.position[0] = position;
-          this->hingeState.velocity[0] = velocity;
+          if (this->hingeState.name.size() == 0) {
+            this->hingeState.name.push_back("hinge");
+            this->hingeState.position.push_back(position);
+            this->hingeState.velocity.push_back(velocity);
+          } else {
+            this->hingeState.position[0] = position;
+            this->hingeState.velocity[0] = velocity;
+          }
 
           this->lastUpdateTime += common::Time (1.0 / this->updateRate);
           this->pub.publish(this->hingeState);
