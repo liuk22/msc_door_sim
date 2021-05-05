@@ -15,3 +15,4 @@ For the following installation steps on ROBOTIS' website, only refer to the port
 3. Run the Gazebo simulation with `roslaunch door_sim door_sim.launch`, make sure the robot model name environment variable is set
 4. Teleoperate the TurtleBot3 in the simulation with `roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch`
 5. Retrieve published angle of the door as a ROS topic using `rostopic echo /hinged_door/hinge`
+6. Retrieve force-torque sensor information of the OPENMANIPULATOR-X robot arm under `rostopic echo /arm/joint{N}/ft_sensor`, where {N} is 1, 2, 3, or 4. 
