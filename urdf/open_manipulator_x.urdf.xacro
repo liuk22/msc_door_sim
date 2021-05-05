@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Include OpenManipulator Gazebo Parameter -->
-  <xacro:include filename="$(find turtlebot3_manipulation_description)/urdf/open_manipulator_x.gazebo.xacro"/>
+  <xacro:include filename="$(find door_sim)/urdf/open_manipulator_x.gazebo.xacro"/>
 
   <!-- Include OpenManipulator Transmission -->
-  <xacro:include filename="$(find turtlebot3_manipulation_description)/urdf/open_manipulator_x.transmission.xacro"/>
+  <xacro:include filename="$(find door_sim)/urdf/open_manipulator_x.transmission.xacro"/>
 
   <!-- Link 1 -->
   <link name="link1">
@@ -273,5 +273,46 @@
                izz="1.0e-03" />
     </inertial>
   </link>
+
+  <!-- Enable ROS-Gazebo plugin access to Gazebo data (feedback) -->
+  <gazebo reference="joint1">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo reference="joint2">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo reference="joint3">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+  <gazebo reference="joint4">
+    <provideFeedback>true</provideFeedback>
+  </gazebo>
+
+
+  <!-- Force-Torque (ft) ROS-Gazebo plugins that publish to ROS topics -->
+  <gazebo>
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>1</updateRate>
+        <topicName>/arm/joint1/ft_sensor</topicName>
+        <jointName>joint1</jointName>
+    </plugin>
+    
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>1.0</updateRate>
+        <topicName>/arm/joint2/ft_sensor</topicName>
+        <jointName>joint2</jointName>
+    </plugin>
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>1.0</updateRate>
+        <topicName>/arm/joint3/ft_sensor</topicName>
+        <jointName>joint3</jointName>
+    </plugin>
+
+    <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>1.0</updateRate>
+        <topicName>/arm/joint4/ft_sensor</topicName>
+        <jointName>joint4</jointName>
+    </plugin>
+  </gazebo>
 
 </robot>
