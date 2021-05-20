@@ -292,24 +292,24 @@
   <!-- Force-Torque (ft) ROS-Gazebo plugins that publish to ROS topics -->
   <gazebo>
     <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-        <updateRate>1</updateRate>
+        <updateRate>20</updateRate>
         <topicName>/arm/joint1/ft_sensor</topicName>
         <jointName>joint1</jointName>
     </plugin>
     
     <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-        <updateRate>1.0</updateRate>
+        <updateRate>20</updateRate>
         <topicName>/arm/joint2/ft_sensor</topicName>
         <jointName>joint2</jointName>
     </plugin>
     <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-        <updateRate>1.0</updateRate>
+        <updateRate>20</updateRate>
         <topicName>/arm/joint3/ft_sensor</topicName>
         <jointName>joint3</jointName>
     </plugin>
 
     <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-        <updateRate>1.0</updateRate>
+        <updateRate>20</updateRate>
         <topicName>/arm/joint4/ft_sensor</topicName>
         <jointName>joint4</jointName>
     </plugin>
