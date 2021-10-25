@@ -1,3 +1,6 @@
+### Description
+A very simple simulation environment with a hinged door affixed to the ground and a TurtleBot3 + OpenX Manipulator. The joint angle of the door is published to a topic. Built with collaboration with the UC Berkeley Mechanical Systems Control Lab. 
+
 ### Setup
 - System dependencies: Ubuntu 16 Xenial, ROS Kinetic, Gazebo ~7
 
